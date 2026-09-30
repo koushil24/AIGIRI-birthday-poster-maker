@@ -6,65 +6,193 @@
 
     <title>AIGIRI Birthday Poster Maker</title>
 
+    <meta
+        name="description"
+        content="Create beautiful AIGIRI birthday posters in seconds."
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
     <main class="app">
 
-        <h1>AIGIRI Birthday Poster</h1>
+        <!-- HEADER -->
 
-        <p class="subtitle">
-            Create a birthday poster in seconds
-        </p>
+        <header class="header">
 
-        <section class="card">
+            <div class="logo-box">
+                <img
+                    src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png"
+                    alt="AIGIRI Geleyara Balaga Logo"
+                >
+            </div>
 
-            <label for="photo">
-                Birthday Person Photo
+            <div>
+                <p class="brand-small">AIGIRI GELEYARA BALAGA</p>
+
+                <h1>
+                    Birthday Poster
+                    <span>Maker</span>
+                </h1>
+
+                <p class="tagline">
+                    Create a beautiful birthday poster in seconds ✨
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- MAIN CARD -->
+
+        <section class="creator-card">
+
+            <div class="card-heading">
+
+                <div class="sparkle">✨</div>
+
+                <div>
+                    <h2>Create Your Poster</h2>
+                    <p>Upload a photo and enter the birthday person's name.</p>
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO UPLOAD -->
+
+            <label class="field-label">
+                Birthday Person's Photo
             </label>
 
-            <input
-                type="file"
-                id="photo"
-                accept="image/*"
-            >
+            <label class="upload-box" for="photo">
 
-            <label for="name">
-                Birthday Person Name
+                <div class="upload-icon">
+                    📷
+                </div>
+
+                <strong id="uploadText">
+                    Choose a photo
+                </strong>
+
+                <span>
+                    JPG, PNG or WEBP
+                </span>
+
+                <input
+                    type="file"
+                    id="photo"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
             </label>
 
-            <input
-                type="text"
-                id="name"
-                placeholder="Enter name"
-                maxlength="30"
-            >
 
-            <button id="makePoster">
+            <!-- NAME -->
+
+            <label
+                class="field-label"
+                for="name"
+            >
+                Birthday Person's Name
+            </label>
+
+            <div class="name-input">
+
+                <span>✦</span>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter name"
+                    maxlength="30"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- CREATE BUTTON -->
+
+            <button
+                id="makePoster"
+                class="create-button"
+            >
+                <span>✨</span>
                 MAKE POSTER
+                <span>→</span>
+            </button>
+
+            <p class="privacy-note">
+                🔒 Your photo stays in your browser.
+            </p>
+
+        </section>
+
+
+        <!-- PREVIEW -->
+
+        <section
+            id="previewSection"
+            class="preview-section"
+        >
+
+            <div class="preview-title">
+
+                <span>🎉</span>
+
+                <div>
+                    <h2>Your Birthday Poster</h2>
+                    <p>Ready to download and share!</p>
+                </div>
+
+            </div>
+
+
+            <div class="poster-frame">
+
+                <canvas
+                    id="posterCanvas"
+                    width="864"
+                    height="1536"
+                ></canvas>
+
+            </div>
+
+
+            <button
+                id="downloadPoster"
+                class="download-button"
+            >
+                ⬇ DOWNLOAD POSTER
             </button>
 
         </section>
 
-        <section id="previewSection" class="preview-section">
 
-            <h2>Your Poster</h2>
+        <!-- FOOTER -->
 
-            <canvas
-                id="posterCanvas"
-                width="864"
-                height="1536">
-            </canvas>
+        <footer>
 
-            <button id="downloadPoster">
-                DOWNLOAD POSTER
-            </button>
+            <img
+                src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png"
+                alt=""
+            >
 
-        </section>
+            <div>
+                <strong>AIGIRI GELEYARA BALAGA</strong>
+                <span>Friendship • Culture • Service</span>
+            </div>
+
+        </footer>
 
     </main>
+
 
     <script src="script.js"></script>
 
