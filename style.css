@@ -589,3 +589,26 @@ footer span {
         padding: 19px;
     }
 }
+.birthday-message {
+    margin-top: 18px;
+    padding: 22px 18px;
+    background: linear-gradient(135deg, #fff8e7, #ffffff);
+    border: 2px solid #f4c542;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(80, 0, 0, 0.12);
+}
+
+.birthday-message h3 {
+    margin: 0 0 10px;
+    color: #8f0000;
+    font-size: 22px;
+}
+
+.birthday-message p {
+    margin: 0;
+    color: #5a3030;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 500;
+}
