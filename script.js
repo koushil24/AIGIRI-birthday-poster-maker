@@ -1,252 +1,489 @@
 const photoInput = document.getElementById("photo");
 const nameInput = document.getElementById("name");
-const makePosterButton = document.getElementById("makePoster");
-const downloadButton = document.getElementById("downloadPoster");
 
-const canvas = document.getElementById("posterCanvas");
-const ctx = canvas.getContext("2d");
+const makePosterButton =
+    document.getElementById("makePoster");
 
-const previewSection = document.getElementById("previewSection");
+const downloadButton =
+    document.getElementById("downloadPoster");
+
+const uploadText =
+    document.getElementById("uploadText");
+
+const canvas =
+    document.getElementById("posterCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+const previewSection =
+    document.getElementById("previewSection");
+
 
 const TEMPLATE_PATH = "assets/template.png";
 
 
-// Hide preview until a poster is created
-previewSection.style.display = "none";
+// --------------------------------------------------
+// Load image
+// --------------------------------------------------
 
-
-// Load an image
 function loadImage(src) {
+
     return new Promise((resolve, reject) => {
+
         const img = new Image();
 
         img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error("Image could not be loaded."));
+
+        img.onerror = () =>
+            reject(
+                new Error("Could not load image.")
+            );
 
         img.src = src;
     });
 }
 
 
-// Crop an image so it fills the target area
-function drawCoverImage(img, x, y, width, height) {
+// --------------------------------------------------
+// Draw uploaded photo inside the birthday arch
+// --------------------------------------------------
 
-    const imageRatio = img.width / img.height;
-    const areaRatio = width / height;
+function drawPhotoInArch(img) {
+
+    /*
+        Template size:
+
+        864 × 1536
+
+        Photo area:
+
+        Top of arch:
+        approximately Y = 425
+
+        Bottom of photo:
+        approximately Y = 1115
+
+        The bottom hills remain untouched.
+    */
+
+    const left = 38;
+    const right = 826;
+
+    const top = 425;
+    const bottom = 1115;
+
+    const centerX = 432;
+
+
+    ctx.save();
+
+
+    // Create the arch-shaped clipping path.
+
+    ctx.beginPath();
+
+    ctx.moveTo(left, bottom);
+
+    ctx.lineTo(left, 800);
+
+    ctx.bezierCurveTo(
+        left,
+        585,
+        185,
+        top,
+        centerX,
+        top
+    );
+
+    ctx.bezierCurveTo(
+        679,
+        top,
+        right,
+        585,
+        right,
+        800
+    );
+
+    ctx.lineTo(right, bottom);
+
+    ctx.closePath();
+
+    ctx.clip();
+
+
+    // Calculate cover crop.
+
+    const areaWidth = right - left;
+    const areaHeight = bottom - top;
+
+    const imageRatio =
+        img.width / img.height;
+
+    const areaRatio =
+        areaWidth / areaHeight;
 
     let sourceWidth;
     let sourceHeight;
     let sourceX;
     let sourceY;
 
+
     if (imageRatio > areaRatio) {
 
         sourceHeight = img.height;
-        sourceWidth = img.height * areaRatio;
 
-        sourceX = (img.width - sourceWidth) / 2;
+        sourceWidth =
+            img.height * areaRatio;
+
+        sourceX =
+            (img.width - sourceWidth) / 2;
+
         sourceY = 0;
 
     } else {
 
         sourceWidth = img.width;
-        sourceHeight = img.width / areaRatio;
+
+        sourceHeight =
+            img.width / areaRatio;
 
         sourceX = 0;
-        sourceY = (img.height - sourceHeight) / 2;
+
+        sourceY =
+            (img.height - sourceHeight) / 2;
     }
+
 
     ctx.drawImage(
         img,
+
         sourceX,
         sourceY,
         sourceWidth,
         sourceHeight,
-        x,
-        y,
-        width,
-        height
+
+        left,
+        top,
+        areaWidth,
+        areaHeight
     );
+
+
+    ctx.restore();
 }
 
 
-// Create the poster
-makePosterButton.addEventListener("click", async () => {
+// --------------------------------------------------
+// Draw person's name
+// --------------------------------------------------
 
-    const file = photoInput.files[0];
-    const personName = nameInput.value.trim();
+function drawName(name) {
 
-    // Check photo
-    if (!file) {
-        alert("Please upload the birthday person's photo.");
-        return;
+    const centerX = canvas.width / 2;
+
+    /*
+       The green landscape area is used for the name.
+       This keeps the birthday heading completely clear.
+    */
+
+    const nameY = 1265;
+
+
+    ctx.save();
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+
+    // Name plate
+
+    const maxWidth = 650;
+
+    let fontSize = 64;
+
+    if (name.length > 18) {
+        fontSize = 54;
     }
 
-    // Check name
-    if (!personName) {
-        alert("Please enter the birthday person's name.");
-        return;
+    if (name.length > 25) {
+        fontSize = 45;
     }
 
-    try {
 
-        makePosterButton.disabled = true;
-        makePosterButton.textContent = "CREATING...";
+    ctx.font =
+        `bold ${fontSize}px Georgia, serif`;
 
-        // Load template
-        const template = await loadImage(TEMPLATE_PATH);
 
-        // Load uploaded photo
-        const photoURL = URL.createObjectURL(file);
-        const photo = await loadImage(photoURL);
+    // Measure text
 
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw template first
-        ctx.drawImage(
-            template,
-            0,
-            0,
-            canvas.width,
-            canvas.height
+    const textWidth =
+        Math.min(
+            ctx.measureText(name).width,
+            maxWidth
         );
 
 
-        /*
-         * PHOTO AREA
-         *
-         * Template size:
-         * 864 × 1536
-         *
-         * The large central area is approximately:
-         * x = 38
-         * y = 430
-         * width = 788
-         * height = 985
-         */
-
-        const photoX = 38;
-        const photoY = 430;
-        const photoWidth = 788;
-        const photoHeight = 985;
-
-
-        // Create clipping area
-        ctx.save();
-
-        ctx.beginPath();
-
-        ctx.rect(
-            photoX,
-            photoY,
-            photoWidth,
-            photoHeight
+    const plateWidth =
+        Math.min(
+            maxWidth + 60,
+            textWidth + 70
         );
 
-        ctx.clip();
+    const plateHeight = 88;
+
+    const plateX =
+        centerX - plateWidth / 2;
+
+    const plateY =
+        nameY - plateHeight / 2;
 
 
-        // Draw uploaded photo
-        drawCoverImage(
-            photo,
-            photoX,
-            photoY,
-            photoWidth,
-            photoHeight
-        );
+    // Gold border
 
-        ctx.restore();
+    ctx.beginPath();
 
-
-        /*
-         * NAME
-         */
-
-        ctx.save();
-
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        // Name position
-        const nameX = canvas.width / 2;
-        const nameY = 1370;
-
-        // Font size
-        let fontSize = 70;
-
-        // Reduce font size for long names
-        if (personName.length > 18) {
-            fontSize = 55;
-        }
-
-        if (personName.length > 25) {
-            fontSize = 45;
-        }
-
-        ctx.font = `bold ${fontSize}px Georgia, serif`;
-
-        // Shadow
-        ctx.shadowColor = "rgba(0, 0, 0, 0.45)";
-        ctx.shadowBlur = 6;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-
-        // Gold name
-        ctx.fillStyle = "#f4c542";
-
-        ctx.fillText(
-            personName,
-            nameX,
-            nameY
-        );
-
-        ctx.restore();
-
-
-        // Show preview
-        previewSection.style.display = "block";
-
-        // Show download button
-        downloadButton.style.display = "block";
-
-        // Scroll to poster
-        previewSection.scrollIntoView({
-            behavior: "smooth"
-        });
-
-
-        // Release uploaded image
-        URL.revokeObjectURL(photoURL);
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Something went wrong while creating the poster."
-        );
-
-    } finally {
-
-        makePosterButton.disabled = false;
-        makePosterButton.textContent = "MAKE POSTER";
-    }
-});
-
-
-// Download poster
-downloadButton.addEventListener("click", () => {
-
-    const link = document.createElement("a");
-
-    link.download = "AIGIRI-Birthday-Poster.png";
-
-    link.href = canvas.toDataURL(
-        "image/png",
-        1.0
+    ctx.roundRect(
+        plateX,
+        plateY,
+        plateWidth,
+        plateHeight,
+        18
     );
 
-    link.click();
-});
+    ctx.fillStyle = "#7a0000";
+
+    ctx.fill();
+
+    ctx.lineWidth = 5;
+
+    ctx.strokeStyle = "#f4c542";
+
+    ctx.stroke();
+
+
+    // Name
+
+    ctx.shadowColor =
+        "rgba(0,0,0,0.5)";
+
+    ctx.shadowBlur = 4;
+
+    ctx.shadowOffsetY = 2;
+
+    ctx.fillStyle = "#ffe28a";
+
+    ctx.fillText(
+        name,
+        centerX,
+        nameY
+    );
+
+
+    ctx.restore();
+}
+
+
+// --------------------------------------------------
+// Create poster
+// --------------------------------------------------
+
+makePosterButton.addEventListener(
+    "click",
+    async () => {
+
+        const file =
+            photoInput.files[0];
+
+        const personName =
+            nameInput.value.trim();
+
+
+        if (!file) {
+
+            alert(
+                "Please upload the birthday person's photo."
+            );
+
+            return;
+        }
+
+
+        if (!personName) {
+
+            alert(
+                "Please enter the birthday person's name."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            makePosterButton.disabled =
+                true;
+
+            makePosterButton.innerHTML =
+                "✨ CREATING POSTER...";
+
+
+            // Load template
+
+            const template =
+                await loadImage(
+                    TEMPLATE_PATH
+                );
+
+
+            // Load uploaded photo
+
+            const photoURL =
+                URL.createObjectURL(file);
+
+            const photo =
+                await loadImage(photoURL);
+
+
+            // Clear canvas
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            // 1. Draw template first
+
+            ctx.drawImage(
+                template,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            /*
+               2. Draw ONLY inside the
+                  large birthday arch.
+            */
+
+            drawPhotoInArch(photo);
+
+
+            /*
+               3. Restore the bottom landscape
+                  from the original template.
+
+               This prevents the uploaded photo
+               from covering the hills.
+            */
+
+            ctx.drawImage(
+                template,
+
+                0,
+                1110,
+                canvas.width,
+                330,
+
+                0,
+                1110,
+                canvas.width,
+                330
+            );
+
+
+            // 4. Add person's name
+
+            drawName(personName);
+
+
+            // Show preview
+
+            previewSection.style.display =
+                "block";
+
+
+            downloadButton.style.display =
+                "block";
+
+
+            // Scroll to result
+
+            previewSection.scrollIntoView({
+                behavior: "smooth"
+            });
+
+
+            URL.revokeObjectURL(
+                photoURL
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not create the poster. Please try again."
+            );
+
+        } finally {
+
+            makePosterButton.disabled =
+                false;
+
+            makePosterButton.innerHTML =
+                "<span>✨</span> MAKE POSTER <span>→</span>";
+        }
+    }
+);
+
+
+// --------------------------------------------------
+// File selected
+// --------------------------------------------------
+
+photoInput.addEventListener(
+    "change",
+    () => {
+
+        const file =
+            photoInput.files[0];
+
+        if (file) {
+
+            uploadText.textContent =
+                file.name;
+        }
+    }
+);
+
+
+// --------------------------------------------------
+// Download
+// --------------------------------------------------
+
+downloadButton.addEventListener(
+    "click",
+    () => {
+
+        const link =
+            document.createElement("a");
+
+        link.download =
+            "AIGIRI-Birthday-Poster.png";
+
+        link.href =
+            canvas.toDataURL(
+                "image/png",
+                1.0
+            );
+
+        link.click();
+    }
+);
