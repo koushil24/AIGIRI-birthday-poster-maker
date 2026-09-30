@@ -18,7 +18,9 @@ const ctx =
 
 const previewSection =
     document.getElementById("previewSection");
-
+birthdayTitle.textContent = `🎂 Happy Birthday, ${personName}!`;
+const birthdayMessage = document.getElementById("birthdayMessage");
+const messageText = document.getElementById("messageText");
 
 const TEMPLATE_PATH = "assets/template.png";
 
@@ -401,11 +403,11 @@ makePosterButton.addEventListener(
 
             drawName(personName);
 
+messageText.textContent =
+    `Team AIGIRI GELEYARA BALAGA, Mysuru wishes you a wonderful birthday filled with happiness, good health, success and beautiful memories! ❤️`;
 
-            // Show preview
-
-            previewSection.style.display =
-                "block";
+birthdayMessage.style.display = "block";
+previewSection.style.display = "block";
 
 
             downloadButton.style.display =
