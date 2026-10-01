@@ -113,3 +113,8 @@ footer img { width: 56px; height: 56px; border-radius: 50%; background: #fff; pa
 footer strong { font-size: 13px; letter-spacing: 1.5px; }
 footer span { font-size: 12px; }
 footer small { font-size: 11px; opacity: 0.75; }
+
+/* ---------- Language switch ---------- */
+.lang { display: flex; gap: 4px; width: fit-content; margin: 0 auto 18px; padding: 4px; border: 1.5px solid var(--gold); border-radius: 999px; background: #fff; }
+.lang button { border: none; background: transparent; padding: 8px 20px; border-radius: 999px; font-size: 14px; font-weight: 800; color: var(--maroon); cursor: pointer; font-family: inherit; }
+.lang button.on { background: linear-gradient(135deg, #a60000, #6d0f0f); color: #fff; }
