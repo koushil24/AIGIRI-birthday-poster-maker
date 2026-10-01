@@ -1,207 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AIGIRI Birthday Poster Maker</title>
-
-    <meta
-        name="description"
-        content="Create beautiful AIGIRI birthday posters in seconds."
-    >
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIGIRI Birthday Poster Maker</title>
+  <meta name="description" content="Create beautiful AIGIRI birthday posters in seconds.">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <main class="app">
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
+    <header class="header">
+      <img class="logo" src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png" alt="AIGIRI logo">
+      <div>
+        <p class="brand">AIGIRI GELEYARA BALAGA</p>
+        <h1>Birthday Poster <span>Maker</span></h1>
+      </div>
+    </header>
 
-    <main class="app">
+    <!-- STEP 1: inputs -->
+    <section class="card">
+      <h2>1. Add details</h2>
 
-        <!-- HEADER -->
+      <label class="upload" for="photo">
+        <span id="uploadText">📷 Choose a photo</span>
+        <input type="file" id="photo" accept="image/*">
+      </label>
 
-        <header class="header">
+      <label class="label" for="name">Birthday person's name</label>
+      <input type="text" id="name" maxlength="30" placeholder="Enter name" autocomplete="off">
 
-            <div class="logo-box">
-                <img
-                    src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png"
-                    alt="AIGIRI Geleyara Balaga Logo"
-                >
-            </div>
+      <div id="adjust" class="adjust" hidden>
+        <label>Zoom <input type="range" id="zoom" min="100" max="300" value="100"></label>
+        <label>Move left / right <input type="range" id="moveX" min="-100" max="100" value="0"></label>
+        <label>Move up / down <input type="range" id="moveY" min="-100" max="100" value="0"></label>
+      </div>
+    </section>
 
-            <div>
-                <p class="brand-small">AIGIRI GELEYARA BALAGA</p>
+    <!-- STEP 2: live preview -->
+    <section class="card">
+      <h2>2. Preview</h2>
+      <div class="frame"><canvas id="poster" width="1080" height="1350"></canvas></div>
 
-                <h1>
-                    Birthday Poster
-                    <span>Maker</span>
-                </h1>
+      <button id="download" class="btn gold">⬇ DOWNLOAD POSTER</button>
+      <button id="share" class="btn red" hidden>📤 SHARE</button>
 
-                <p class="tagline">
-                    Create a beautiful birthday poster in seconds ✨
-                </p>
-            </div>
+      <div class="wish">
+        <p id="wishText"></p>
+        <button id="copy" class="btn light">📋 Copy wish message</button>
+      </div>
+    </section>
 
-        </header>
+    <footer>🔒 Your photo never leaves your phone • Friendship • Culture • Service</footer>
+  </main>
 
-
-        <!-- MAIN CARD -->
-
-        <section class="creator-card">
-
-            <div class="card-heading">
-
-                <div class="sparkle">✨</div>
-
-                <div>
-                    <h2>Create Your Poster</h2>
-                    <p>Upload a photo and enter the birthday person's name.</p>
-                </div>
-
-            </div>
-
-
-            <!-- PHOTO UPLOAD -->
-
-            <label class="field-label">
-                Birthday Person's Photo
-            </label>
-
-            <label class="upload-box" for="photo">
-
-                <div class="upload-icon">
-                    📷
-                </div>
-
-                <strong id="uploadText">
-                    Choose a photo
-                </strong>
-
-                <span>
-                    JPG, PNG or WEBP
-                </span>
-
-                <input
-                    type="file"
-                    id="photo"
-                    accept="image/png,image/jpeg,image/webp"
-                >
-
-            </label>
-
-
-            <!-- NAME -->
-
-            <label
-                class="field-label"
-                for="name"
-            >
-                Birthday Person's Name
-            </label>
-
-            <div class="name-input">
-
-                <span>✦</span>
-
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter name"
-                    maxlength="30"
-                    autocomplete="off"
-                >
-
-            </div>
-
-
-            <!-- CREATE BUTTON -->
-
-            <button
-                id="makePoster"
-                class="create-button"
-            >
-                <span>✨</span>
-                MAKE POSTER
-                <span>→</span>
-            </button>
-
-            <p class="privacy-note">
-                🔒 Your photo stays in your browser.
-            </p>
-
-        </section>
-
-
-        <!-- PREVIEW -->
-
-        <section
-            id="previewSection"
-            class="preview-section"
-        >
-
-            <button id="makePoster" class="create-button">
-    <span>✨</span> MAKE POSTER <span>→</span>
-</button>
-
-<p class="privacy-note">🔒 Your photo stays in your browser.</p>
-
-<div id="birthdayMessage" class="birthday-message">
-    <h3 id="birthdayTitle">🎂 Happy Birthday!</h3>
-    <p id="messageText"></p>
-</div>
-
-<section id="previewSection" class="preview-section">
-
-            </div>
-
-
-            <div class="poster-frame">
-
-                <canvas
-                    id="posterCanvas"
-                    width="864"
-                    height="1536"
-                ></canvas>
-
-            </div>
-
-
-            <button
-                id="downloadPoster"
-                class="download-button"
-            >
-                ⬇ DOWNLOAD POSTER
-            </button>         
-<div id="birthdayMessage" class="birthday-message">
-    <h3 id="birthdayTitle">🎂 Happy Birthday!</h3>
-    <p id="messageText"></p>
-</div>  
-        </section>
-
-
-        <!-- FOOTER -->
-
-        <footer>
-
-            <img
-                src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png"
-                alt=""
-            >
-
-            <div>
-                <strong>AIGIRI GELEYARA BALAGA</strong>
-                <span>Friendship • Culture • Service</span>
-            </div>
-
-        </footer>
-
-    </main>
-
-
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
