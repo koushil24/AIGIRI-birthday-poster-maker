@@ -590,6 +590,7 @@ footer span {
     }
 }
 .birthday-message {
+    display: none;
     margin-top: 18px;
     padding: 22px 18px;
     background: linear-gradient(135deg, #fff8e7, #ffffff);
