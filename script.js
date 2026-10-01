@@ -246,8 +246,8 @@ const T = {
   kn: {
     title: "🎂 ಹುಟ್ಟುಹಬ್ಬದ ಪೋಸ್ಟರ್ ಮೇಕರ್",
     fmt: "JPG, PNG ಅಥವಾ WEBP",
-    upload: "ಹುಟ್ಟುಹಬ್ಬದ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
-    ph: "ಹೆಸರು ನಮೂದಿಸಿ",
+    upload: "ನಿಮ್ಮ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    ph: "ನಿಮ್ಮ ಹೆಸರು ನಮೂದಿಸಿ",
     make: "✨ ಪೋಸ್ಟರ್ ಮಾಡಿ →",
     note: "🔒 ನಿಮ್ಮ ಫೋಟೋ ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲೇ ಇರುತ್ತದೆ",
     yours: "🎉 ನಿಮ್ಮ ಹುಟ್ಟುಹಬ್ಬದ ಪೋಸ್ಟರ್",
@@ -259,8 +259,8 @@ const T = {
     loc: "📍 ಮೈಸೂರು, ಕರ್ನಾಟಕ",
     msgTitle: (n) => `🎂 ಹುಟ್ಟುಹಬ್ಬದ ಶುಭಾಶಯಗಳು, ${n}!`,
     msg: "ಐಗಿರಿ ಗೆಳೆಯರ ಬಳಗ, ಮೈಸೂರು ತಂಡದ ವತಿಯಿಂದ<br>ನಿಮಗೆ ಸಂತೋಷ, ಆರೋಗ್ಯ, ಯಶಸ್ಸು ಮತ್ತು<br>ಸುಂದರ ನೆನಪುಗಳಿಂದ ತುಂಬಿದ<br>ಹುಟ್ಟುಹಬ್ಬದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು! ❤️",
-    needPhoto: "ದಯವಿಟ್ಟು ಮೊದಲು ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.",
-    needName: "ದಯವಿಟ್ಟು ಹೆಸರು ನಮೂದಿಸಿ.",
+    needPhoto: "ದಯವಿಟ್ಟು ಮೊದಲು ನಿಮ್ಮ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.",
+    needName: "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹೆಸರು ನಮೂದಿಸಿ.",
     badImg: "ಈ ಫೋಟೋ ಓದಲಾಗಲಿಲ್ಲ. ಬೇರೆ ಫೋಟೋ ಪ್ರಯತ್ನಿಸಿ.",
     poster: {
       top: "✦ ಹುಟ್ಟುಹಬ್ಬದ ✦", big: "ಶುಭಾಶಯಗಳು",
@@ -273,8 +273,8 @@ const T = {
   en: {
     title: "🎂 Birthday Poster Maker",
     fmt: "JPG, PNG or WEBP",
-    upload: "Upload Birthday Photo",
-    ph: "Enter Name",
+    upload: "Upload your photo",
+    ph: "Enter your name",
     make: "✨ MAKE POSTER →",
     note: "🔒 Your photo stays in your phone",
     yours: "🎉 Your Birthday Poster",
@@ -286,8 +286,8 @@ const T = {
     loc: "📍 Mysuru, Karnataka",
     msgTitle: (n) => `🎂 Happy Birthday, ${n}!`,
     msg: "Team AIGIRI GELEYARA BALAGA,<br>Mysuru wishes you a wonderful<br>birthday filled with happiness,<br>good health, success and<br>beautiful memories! ❤️",
-    needPhoto: "Please upload the birthday photo first.",
-    needName: "Please enter the name.",
+    needPhoto: "Please upload your photo first.",
+    needName: "Please enter your name.",
     badImg: "Could not read this image. Please try another photo.",
     poster: {
       top: "✦ HAPPY ✦", big: "BIRTHDAY",
