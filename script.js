@@ -73,24 +73,39 @@ function drawBackground() {
   }
 }
 
+// shrink text until it fits the given width
+function fitFont(text, size, maxW, family, weight = "bold", style = "") {
+  do {
+    ctx.font = `${style} ${weight} ${size}px ${family}`.trim();
+    size -= 2;
+  } while (ctx.measureText(text).width > maxW && size > 24);
+}
+
+const KN_FONT = "'Noto Sans Kannada','Nirmala UI',Tunga,sans-serif";
+const EN_FONT = "Georgia, serif";
+
 function drawTitle() {
+  const P = T[lang].poster;
+  const en = lang === "en";
+  const fam = en ? EN_FONT : KN_FONT;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
+
   ctx.fillStyle = "#ffe58a";
-  ctx.font = "bold 40px Georgia, serif";
-  if ("letterSpacing" in ctx) ctx.letterSpacing = "10px";
-  ctx.fillText("✦ HAPPY ✦", W / 2, 95);
+  if ("letterSpacing" in ctx) ctx.letterSpacing = en ? "10px" : "0px";
+  fitFont(P.top, 40, 800, fam);
+  ctx.fillText(P.top, W / 2, 95);
 
   const g = ctx.createLinearGradient(0, 120, 0, 230);
   g.addColorStop(0, "#fff3a3");
   g.addColorStop(1, "#d9a000");
   ctx.fillStyle = g;
-  ctx.font = "bold 128px Georgia, serif";
-  if ("letterSpacing" in ctx) ctx.letterSpacing = "2px";
+  if ("letterSpacing" in ctx) ctx.letterSpacing = en ? "2px" : "0px";
+  fitFont(P.big, en ? 128 : 112, 940, fam);
   ctx.shadowColor = "rgba(0,0,0,0.5)";
   ctx.shadowBlur = 12;
   ctx.shadowOffsetY = 5;
-  ctx.fillText("BIRTHDAY", W / 2, 185);
+  ctx.fillText(P.big, W / 2, 185);
   ctx.shadowColor = "transparent";
   if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
 }
@@ -162,12 +177,20 @@ function drawName(name) {
 }
 
 function drawWish() {
+  const P = T[lang].poster;
+  const fam = lang === "en" ? EN_FONT : KN_FONT;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = "#fff3d6";
-  ctx.font = "italic 36px Georgia, serif";
-  ctx.fillText("Wishing you happiness, good health", W / 2, 1085);
-  ctx.fillText("and success in every step of life!", W / 2, 1135);
+
+  ctx.fillStyle = "#f4c542";                       // line 1: Team AIGIRI ... wishes you
+  fitFont(P.team, 34, 960, fam);
+  ctx.fillText(P.team, W / 2, 1078);
+
+  ctx.fillStyle = "#fff3d6";                       // lines 2 and 3
+  fitFont(P.l2, 33, 960, fam, "normal", lang === "en" ? "italic" : "");
+  ctx.fillText(P.l2, W / 2, 1123);
+  fitFont(P.l3, 33, 960, fam, "normal", lang === "en" ? "italic" : "");
+  ctx.fillText(P.l3, W / 2, 1165);
 }
 
 function drawFooter() {
@@ -204,7 +227,7 @@ function drawFooter() {
   ctx.fillText("AIGIRI GELEYARA BALAGA", tx, top + 92);
   ctx.fillStyle = "#fff3d6";
   ctx.font = "24px Georgia, serif";
-  ctx.fillText("Mysuru  •  Friendship • Culture • Service", tx, top + 130);
+  ctx.fillText(T[lang].poster.foot, tx, top + 130);
 }
 
 function drawPoster() {
@@ -218,38 +241,124 @@ function drawPoster() {
   drawFooter();
 }
 
+// ---------- language (Kannada / English) ----------
+const T = {
+  kn: {
+    title: "🎂 ಹುಟ್ಟುಹಬ್ಬದ ಪೋಸ್ಟರ್ ಮೇಕರ್",
+    fmt: "JPG, PNG ಅಥವಾ WEBP",
+    upload: "ಹುಟ್ಟುಹಬ್ಬದ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+    ph: "ಹೆಸರು ನಮೂದಿಸಿ",
+    make: "✨ ಪೋಸ್ಟರ್ ಮಾಡಿ →",
+    note: "🔒 ನಿಮ್ಮ ಫೋಟೋ ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲೇ ಇರುತ್ತದೆ",
+    yours: "🎉 ನಿಮ್ಮ ಹುಟ್ಟುಹಬ್ಬದ ಪೋಸ್ಟರ್",
+    adjust: "🎯 ಫೋಟೋ ಹೊಂದಿಸಿ (ಜೂಮ್ / ಸರಿಸಿ)",
+    zoom: "ಜೂಮ್", lr: "ಎಡ / ಬಲ", ud: "ಮೇಲೆ / ಕೆಳಗೆ",
+    download: "⬇ ಪೋಸ್ಟರ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+    share: "📤 ಪೋಸ್ಟರ್ ಹಂಚಿಕೊಳ್ಳಿ",
+    motto: "ಸ್ನೇಹ • ಸಂಸ್ಕೃತಿ • ಸೇವೆ",
+    loc: "📍 ಮೈಸೂರು, ಕರ್ನಾಟಕ",
+    msgTitle: (n) => `🎂 ಹುಟ್ಟುಹಬ್ಬದ ಶುಭಾಶಯಗಳು, ${n}!`,
+    msg: "ಐಗಿರಿ ಗೆಳೆಯರ ಬಳಗ, ಮೈಸೂರು ತಂಡದ ವತಿಯಿಂದ<br>ನಿಮಗೆ ಸಂತೋಷ, ಆರೋಗ್ಯ, ಯಶಸ್ಸು ಮತ್ತು<br>ಸುಂದರ ನೆನಪುಗಳಿಂದ ತುಂಬಿದ<br>ಹುಟ್ಟುಹಬ್ಬದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು! ❤️",
+    needPhoto: "ದಯವಿಟ್ಟು ಮೊದಲು ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.",
+    needName: "ದಯವಿಟ್ಟು ಹೆಸರು ನಮೂದಿಸಿ.",
+    badImg: "ಈ ಫೋಟೋ ಓದಲಾಗಲಿಲ್ಲ. ಬೇರೆ ಫೋಟೋ ಪ್ರಯತ್ನಿಸಿ.",
+    poster: {
+      top: "✦ ಹುಟ್ಟುಹಬ್ಬದ ✦", big: "ಶುಭಾಶಯಗಳು",
+      team: "ಐಗಿರಿ ಗೆಳೆಯರ ಬಳಗ, ಮೈಸೂರು ತಂಡದಿಂದ ಶುಭಾಶಯಗಳು",
+      l2: "ನಿಮ್ಮ ಜೀವನದಲ್ಲಿ ಸಂತೋಷ, ಆರೋಗ್ಯ,",
+      l3: "ಯಶಸ್ಸು ಮತ್ತು ಸುಂದರ ನೆನಪುಗಳು ತುಂಬಿರಲಿ!",
+      foot: "ಮೈಸೂರು  •  ಸ್ನೇಹ • ಸಂಸ್ಕೃತಿ • ಸೇವೆ",
+    },
+  },
+  en: {
+    title: "🎂 Birthday Poster Maker",
+    fmt: "JPG, PNG or WEBP",
+    upload: "Upload Birthday Photo",
+    ph: "Enter Name",
+    make: "✨ MAKE POSTER →",
+    note: "🔒 Your photo stays in your phone",
+    yours: "🎉 Your Birthday Poster",
+    adjust: "🎯 Adjust photo (zoom / move)",
+    zoom: "Zoom", lr: "Left / Right", ud: "Up / Down",
+    download: "⬇ DOWNLOAD POSTER",
+    share: "📤 SHARE POSTER",
+    motto: "Friendship • Culture • Service",
+    loc: "📍 Mysuru, Karnataka",
+    msgTitle: (n) => `🎂 Happy Birthday, ${n}!`,
+    msg: "Team AIGIRI GELEYARA BALAGA,<br>Mysuru wishes you a wonderful<br>birthday filled with happiness,<br>good health, success and<br>beautiful memories! ❤️",
+    needPhoto: "Please upload the birthday photo first.",
+    needName: "Please enter the name.",
+    badImg: "Could not read this image. Please try another photo.",
+    poster: {
+      top: "✦ HAPPY ✦", big: "BIRTHDAY",
+      team: "Team AIGIRI GELEYARA BALAGA, Mysuru wishes you",
+      l2: "a wonderful birthday filled with happiness,",
+      l3: "good health, success and beautiful memories!",
+      foot: "Mysuru  •  Friendship • Culture • Service",
+    },
+  },
+};
+
+let lang = "kn";                                   // default language
+try { lang = localStorage.getItem("lang") || "kn"; } catch {}
+let fileName = "";
+
+function updateMsgTitle() {
+  $("msgTitle").textContent = T[lang].msgTitle($("name").value.trim());
+}
+
+// Put the chosen language on every piece of text (page + poster)
+function applyLang() {
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = t[el.dataset.i18n]));
+  document.querySelectorAll("[data-i18n-ph]").forEach((el) => (el.placeholder = t[el.dataset.i18nPh]));
+  $("msgText").innerHTML = t.msg;
+  $("uploadText").textContent = fileName ? "✅ " + fileName : t.upload;
+  document.querySelectorAll("[data-lang]").forEach((b) => b.classList.toggle("on", b.dataset.lang === lang));
+  if (created) { updateMsgTitle(); drawPoster(); }
+}
+
+document.querySelectorAll("[data-lang]").forEach((b) =>
+  b.addEventListener("click", () => {
+    lang = b.dataset.lang;
+    try { localStorage.setItem("lang", lang); } catch {}
+    applyLang();
+  })
+);
+
 // ---------- events ----------
 $("photo").addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
   try {
     photo = await loadImage(URL.createObjectURL(file));
-    $("uploadText").textContent = "✅ " + file.name;
+    fileName = file.name;
+    $("uploadText").textContent = "✅ " + fileName;
     document.querySelector(".upload").classList.add("done");
     if (created) drawPoster();
   } catch {
-    alert("Could not read this image. Please try another photo.");
+    alert(T[lang].badImg);
   }
 });
 
 // MAKE POSTER button
 $("makePoster").addEventListener("click", () => {
-  const name = $("name").value.trim();
-  if (!photo) { alert("Please upload the birthday photo first."); return; }
-  if (!name) { alert("Please enter the name."); return; }
+  if (!photo) { alert(T[lang].needPhoto); return; }
+  if (!$("name").value.trim()) { alert(T[lang].needName); return; }
 
   created = true;
-  $("msgTitle").textContent = `🎂 Happy Birthday, ${name}!`;
+  updateMsgTitle();
   drawPoster();
   $("result").hidden = false;
   $("result").scrollIntoView({ behavior: "smooth" });
 });
 
-// redraw live while adjusting (only after poster is created)
+// redraw live while typing / adjusting (only after poster is created)
 ["name", "zoom", "moveX", "moveY"].forEach((id) =>
   $(id).addEventListener("input", () => {
     if (!created) return;
-    $("msgTitle").textContent = `🎂 Happy Birthday, ${$("name").value.trim() || ""}!`;
+    updateMsgTitle();
     drawPoster();
   })
 );
@@ -271,7 +380,7 @@ $("share").addEventListener("click", async () => {
   try {
     await navigator.share({
       files: [file],
-      text: `🎂 Happy Birthday, ${$("name").value.trim()}! - Team AIGIRI GELEYARA BALAGA, Mysuru ❤️`,
+      text: `${T[lang].msgTitle($("name").value.trim())} - Team AIGIRI GELEYARA BALAGA, Mysuru ❤️`,
     });
   } catch { /* user closed share sheet */ }
 });
@@ -281,6 +390,7 @@ if (navigator.canShare && navigator.canShare({ files: [new File([""], "a.png", {
 }
 
 // ---------- start ----------
+applyLang();
 loadImage(LOGO_URL, true)
   .then((img) => { logo = img; if (created) drawPoster(); })
   .catch(() => { /* poster still works without the logo */ });
