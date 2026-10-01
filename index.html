@@ -3,57 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AIGIRI Birthday Poster Maker</title>
-  <meta name="description" content="Create beautiful AIGIRI birthday posters in seconds.">
-  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#6d0f0f">
+  <title>Birthday Poster Maker | AIGIRI GELEYARA BALAGA</title>
+  <meta name="description" content="Create a beautiful birthday poster in seconds - AIGIRI GELEYARA BALAGA, Mysuru.">
+  <!-- ?v=2 forces the phone to load the NEW files, not old cached ones -->
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
   <main class="app">
 
-    <header class="header">
+    <!-- ===== STEP 1: THE FORM ===== -->
+    <section class="card hero">
       <img class="logo" src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png" alt="AIGIRI logo">
-      <div>
-        <p class="brand">AIGIRI GELEYARA BALAGA</p>
-        <h1>Birthday Poster <span>Maker</span></h1>
-      </div>
-    </header>
-
-    <!-- STEP 1: inputs -->
-    <section class="card">
-      <h2>1. Add details</h2>
+      <h1 class="kn">ಐಗಿರಿ ಗೆಳೆಯರ ಬಳಗ</h1>
+      <p class="brand">AIGIRI GELEYARA BALAGA</p>
+      <div class="divider"><span>✦</span></div>
+      <h2>🎂 Birthday Poster Maker</h2>
 
       <label class="upload" for="photo">
-        <span id="uploadText">📷 Choose a photo</span>
+        <span class="up-icon">📷</span>
+        <strong id="uploadText">Upload Birthday Photo</strong>
+        <small>JPG, PNG or WEBP</small>
         <input type="file" id="photo" accept="image/*">
       </label>
 
-      <label class="label" for="name">Birthday person's name</label>
-      <input type="text" id="name" maxlength="30" placeholder="Enter name" autocomplete="off">
-
-      <div id="adjust" class="adjust" hidden>
-        <label>Zoom <input type="range" id="zoom" min="100" max="300" value="100"></label>
-        <label>Move left / right <input type="range" id="moveX" min="-100" max="100" value="0"></label>
-        <label>Move up / down <input type="range" id="moveY" min="-100" max="100" value="0"></label>
+      <div class="name-box">
+        <span>✏️</span>
+        <input type="text" id="name" maxlength="30" placeholder="Enter Name" autocomplete="off">
       </div>
+
+      <button id="makePoster" class="btn main">✨ MAKE POSTER →</button>
+      <p class="note">🔒 Your photo stays in your phone</p>
     </section>
 
-    <!-- STEP 2: live preview -->
-    <section class="card">
-      <h2>2. Preview</h2>
-      <div class="frame"><canvas id="poster" width="1080" height="1350"></canvas></div>
+    <!-- ===== STEP 2: RESULT (hidden until button is clicked) ===== -->
+    <div id="result" hidden>
 
-      <button id="download" class="btn gold">⬇ DOWNLOAD POSTER</button>
-      <button id="share" class="btn red" hidden>📤 SHARE</button>
+      <section class="card message">
+        <h3 id="msgTitle">🎂 Happy Birthday!</h3>
+        <p>Team AIGIRI GELEYARA BALAGA,<br>Mysuru wishes you a wonderful<br>birthday filled with happiness,<br>good health, success and<br>beautiful memories! ❤️</p>
+      </section>
 
-      <div class="wish">
-        <p id="wishText"></p>
-        <button id="copy" class="btn light">📋 Copy wish message</button>
-      </div>
-    </section>
+      <section class="card">
+        <h3 class="center">🎉 Your Birthday Poster</h3>
+        <div class="frame"><canvas id="poster" width="1080" height="1350"></canvas></div>
 
-    <footer>🔒 Your photo never leaves your phone • Friendship • Culture • Service</footer>
+        <details class="adjust">
+          <summary>🎯 Adjust photo (zoom / move)</summary>
+          <label>Zoom <input type="range" id="zoom" min="100" max="300" value="100"></label>
+          <label>Left / Right <input type="range" id="moveX" min="-100" max="100" value="0"></label>
+          <label>Up / Down <input type="range" id="moveY" min="-100" max="100" value="0"></label>
+        </details>
+
+        <button id="download" class="btn gold">⬇ DOWNLOAD POSTER</button>
+        <button id="share" class="btn main" hidden>📤 SHARE POSTER</button>
+      </section>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <img src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png" alt="">
+      <strong>AIGIRI GELEYARA BALAGA</strong>
+      <span>Friendship • Culture • Service</span>
+      <small>📍 Mysuru, Karnataka</small>
+    </footer>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>
