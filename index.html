@@ -7,7 +7,7 @@
   <title>Birthday Poster Maker | AIGIRI GELEYARA BALAGA</title>
   <meta name="description" content="Create a beautiful birthday poster in seconds - AIGIRI GELEYARA BALAGA, Mysuru.">
   <!-- ?v=2 forces the phone to load the NEW files, not old cached ones -->
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <main class="app">
@@ -18,22 +18,27 @@
       <h1 class="kn">ಐಗಿರಿ ಗೆಳೆಯರ ಬಳಗ</h1>
       <p class="brand">AIGIRI GELEYARA BALAGA</p>
       <div class="divider"><span>✦</span></div>
-      <h2>🎂 Birthday Poster Maker</h2>
+      <h2 data-i18n="title">🎂 Birthday Poster Maker</h2>
+
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="kn">ಕನ್ನಡ</button>
+        <button type="button" data-lang="en">English</button>
+      </div>
 
       <label class="upload" for="photo">
         <span class="up-icon">📷</span>
         <strong id="uploadText">Upload Birthday Photo</strong>
-        <small>JPG, PNG or WEBP</small>
+        <small data-i18n="fmt">JPG, PNG or WEBP</small>
         <input type="file" id="photo" accept="image/*">
       </label>
 
       <div class="name-box">
         <span>✏️</span>
-        <input type="text" id="name" maxlength="30" placeholder="Enter Name" autocomplete="off">
+        <input type="text" id="name" maxlength="30" placeholder="Enter Name" data-i18n-ph="ph" autocomplete="off">
       </div>
 
-      <button id="makePoster" class="btn main">✨ MAKE POSTER →</button>
-      <p class="note">🔒 Your photo stays in your phone</p>
+      <button id="makePoster" class="btn main" data-i18n="make">✨ MAKE POSTER →</button>
+      <p class="note" data-i18n="note">🔒 Your photo stays in your phone</p>
     </section>
 
     <!-- ===== STEP 2: RESULT (hidden until button is clicked) ===== -->
@@ -41,22 +46,22 @@
 
       <section class="card message">
         <h3 id="msgTitle">🎂 Happy Birthday!</h3>
-        <p>Team AIGIRI GELEYARA BALAGA,<br>Mysuru wishes you a wonderful<br>birthday filled with happiness,<br>good health, success and<br>beautiful memories! ❤️</p>
+        <p id="msgText"></p>
       </section>
 
       <section class="card">
-        <h3 class="center">🎉 Your Birthday Poster</h3>
+        <h3 class="center" data-i18n="yours">🎉 Your Birthday Poster</h3>
         <div class="frame"><canvas id="poster" width="1080" height="1350"></canvas></div>
 
         <details class="adjust">
-          <summary>🎯 Adjust photo (zoom / move)</summary>
-          <label>Zoom <input type="range" id="zoom" min="100" max="300" value="100"></label>
-          <label>Left / Right <input type="range" id="moveX" min="-100" max="100" value="0"></label>
-          <label>Up / Down <input type="range" id="moveY" min="-100" max="100" value="0"></label>
+          <summary data-i18n="adjust">🎯 Adjust photo (zoom / move)</summary>
+          <label><span data-i18n="zoom">Zoom</span> <input type="range" id="zoom" min="100" max="300" value="100"></label>
+          <label><span data-i18n="lr">Left / Right</span> <input type="range" id="moveX" min="-100" max="100" value="0"></label>
+          <label><span data-i18n="ud">Up / Down</span> <input type="range" id="moveY" min="-100" max="100" value="0"></label>
         </details>
 
-        <button id="download" class="btn gold">⬇ DOWNLOAD POSTER</button>
-        <button id="share" class="btn main" hidden>📤 SHARE POSTER</button>
+        <button id="download" class="btn gold" data-i18n="download">⬇ DOWNLOAD POSTER</button>
+        <button id="share" class="btn main" data-i18n="share" hidden>📤 SHARE POSTER</button>
       </section>
     </div>
 
@@ -64,11 +69,11 @@
     <footer>
       <img src="https://koushil24.github.io/aigiri-geleyara-balaga/images/logo.png" alt="">
       <strong>AIGIRI GELEYARA BALAGA</strong>
-      <span>Friendship • Culture • Service</span>
-      <small>📍 Mysuru, Karnataka</small>
+      <span data-i18n="motto">Friendship • Culture • Service</span>
+      <small data-i18n="loc">📍 Mysuru, Karnataka</small>
     </footer>
   </main>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
